@@ -1,0 +1,87 @@
+---
+title: "Package Management for R and Python"
+---
+
+## Learning Objectives
+
+- **Explain** why package management is complicated for both Python and R
+- **Define** a software environment and how it enables reproducible and portable analysis
+- **Manage** software packages reproducibly for an analysis using `uv` (Python) 
+- **Manage** software packages reproducibly for an analysis using `rv` (R)
+
+## What is a reproducible environment?
+
+- Install packages once, run anywhere
+- Fixed to a particular version of Python or R
+- Packages are fixed/pinned to specific version numbers
+
+## Why use package managers?
+
+- Installing the right set of packages can be a pain to reproduce (Dependency Hell)
+- Future you
+- Collaboration with others
+- Dissemination and sharing (see Making Code Ready for Publication)
+
+## `uv`/`rv`: State of the art package management
+
+- Both work on the command line
+- `uv` - package manager for Python
+    - [installation instructions]()
+- `rv` - package manager for R
+    - [installation instructions]()
+
+## Why not `conda`?
+
+- 
+
+## Minimal file structure for a project
+
+```r
+rv/
+library/
+scripts/
+activate.R
+sets .libPaths and options(“repos”)
+rvr.R
+sets up .rv environment
+.gitignore
+ignores library/
+.Rprofile
+used to run rv/scripts/* to set up project
+```
+
+## Exercise: Explore a repository set up to be reproducible
+
+- R
+- Python
+
+- R users: Look at both the `rproject.toml` and `rv.lock` file
+- Python users: Look at both the `pyproject.toml` and `uv.lock` file
+
+## Exercise: Clone and restore an environment
+
+- R Project (`rv` is already installed)
+- Python Project (`uv` is already installed)
+
+Try rendering the `.ipynb` or `.qmd` file in the project - you will get an error
+
+Under terminal, run:
+
+`rv sync`
+`uv sync`
+
+Try rendering the `.ipynb` (Python) or `.qmd` file
+
+## `uv` and `rv`: start from scratch
+
+- Both `uv` and `rv` expect you to start from scratch
+- Initialize your folder with `uv init`/`rv init`
+- Adds a `.rv`/`.uv` directory 
+
+## Adding packages using `uv add`/`rv add`
+
+- You need to declare the packages you want to use
+    - `uv add pandas`
+    - `rv add tidyverse`
+
+## Bonus: Try downlading the project and open on your laptop
