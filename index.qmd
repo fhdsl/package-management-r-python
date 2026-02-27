@@ -1,5 +1,6 @@
 ---
 title: "Package Management for R and Python"
+format: revealjs
 ---
 
 ## Learning Objectives
@@ -9,79 +10,297 @@ title: "Package Management for R and Python"
 - **Manage** software packages reproducibly for an analysis using `uv` (Python) 
 - **Manage** software packages reproducibly for an analysis using `rv` (R)
 
+## What you need to follow along
+
+For R:
+1. [Install `rv`](https://a2-ai.github.io/rv-docs/intro/installation/)
+2. Install `rig` to manage different versions of R
+  a. Mac installer: <https://github.com/r-lib/rig/releases/download/v0.7.1/rig-0.7.1-macOS-x86_64.pkg>
+  b. PC installer: <https://github.com/r-lib/rig/releases/download/v0.7.1/rig-windows-0.7.1.exe>
+  c. `rig add 4.5.2` to add R 4.5.2 on your system 
+3. Install Positron
+4. Clone or download http://github.com/fhdsl/mcr_example_r
+5. Open the folder in Positron (**File >> Open Folder**)
+
+For Python:
+1. Install Python 3.13
+2. Install `uv`
+  a. [Mac Instructions](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_1) (I use homebrew)
+  b. [PC Instructions](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_2)
+3. Install Positron
+4. Clone or download http://github.com/fhdsl/mcr_example_python
+5. Open the folder in Positron (**File >> Open Folder**)
+
 ## What is a reproducible environment?
 
-- Install packages once, run anywhere
+- Install packages with annotations, run anywhere
 - Fixed to a particular version of Python or R
 - Packages are fixed/pinned to specific version numbers
 
 ## Why use package managers?
 
-- Installing the right set of packages can be a pain to reproduce (Dependency Hell)
-- Future you
+- Installing the right set of packages can be a pain to reproduce ([Dependency Hell](https://medium.com/knerd/the-nine-circles-of-python-dependency-hell-481d53e3e025))
+    - Two different packages will require conflcting versions of another package
+- Future you, different laptop
 - Collaboration with others
 - Dissemination and sharing (see Making Code Ready for Publication)
 
 ## `uv`/`rv`: State of the art package management
 
 - Both work on the command line
-- `uv` - package manager for Python
-    - [installation instructions]()
+
+::::{.panel-tabset group="language"}
+## R
+	
 - `rv` - package manager for R
-    - [installation instructions]()
+- [installation instructions]()
+
+
+## Python
+	
+- `uv` - package manager for Python
+- [installation instructions]()
+	
+::::
+
 
 ## Why not `conda`?
 
 - 
 
-## Minimal file structure for a project
+
+## What: Lockfiles and Environments
+
+- Lockfiles are a recipe for recreating an environment
+- We use tools to recreate them:
+  - R: `renv` and `rv`
+  - Python: `venv` and `uv`
+- Environments live in our folder isolated from everything else
+  - Versions of R/Python
+  - Libraries of packages
+
+
+## What: Lockfile
+
+```
+my_project/                ## Top level
+├── renv.lock              ## R
+├── requirements.txt       ## Python
+```
+
+- List of packages and versions that you used in analysis
+- Talk about `rv` and `uv` in Package management session
+
+
+
+## Lockfile Examples
+
+::: {.panel-tabset}
+
+## R
 
 ```r
-rv/
-library/
-scripts/
-activate.R
-sets .libPaths and options(“repos”)
-rvr.R
-sets up .rv environment
-.gitignore
-ignores library/
-.Rprofile
-used to run rv/scripts/* to set up project
+{
+  "R": {
+    "Version": "4.2.3",
+    "Repositories": [
+      {
+        "Name": "CRAN",
+        "URL": "https://cloud.r-project.org"
+      }
+    ]
+  },
+  "Packages": {
+    "markdown": {
+      "Package": "markdown",
+      "Version": "1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "4584a57f565dd7987d59dda3a02cfb41"
+    },
+    "mime": {
+      "Package": "mime",
+      "Version": "0.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "908d95ccbfd1dd274073ef07a7c93934"
+    }
+  }
+}
 ```
+
+## Python 
+
+```python
+anyio==4.11.0
+appnope==0.1.4
+argon2-cffi==25.1.0
+argon2-cffi-bindings==25.1.0
+arrow==1.3.0
+asttokens==3.0.0
+async-lru==2.0.5
+attrs==25.3.0
+babel==2.17.0
+beautifulsoup4==4.13.5
+bleach==6.2.0
+certifi==2025.8.3
+cffi==2.0.0
+[...]
+```
+
+:::
+
+## Exercise: Look at a lockfile (5 minutes)
+
+- R: <https://github.com/fhdsl/mcr_example_r> - look at `renv.lock`
+- Python: <https://github.com/fhdsl/mcr_example_r> - look at `requirements.txt` 
+
+
+## Why not Conda?
+
+Anaconda is charging institutions for using their forge - be aware that you will need to pay charges or change your forge to the Fred Hutch version. 
+
+For more info: <https://conda-forge.fredhutch.org/>
+
 
 ## Exercise: Explore a repository set up to be reproducible
 
-- R
-- Python
-
+::::{.panel-tabset group="language"}
+## R
+	
+- R ([GitHub Link]((https://github.com/fhdsl/mcr_example_r))
 - R users: Look at both the `rproject.toml` and `rv.lock` file
+
+## Python
+	
+- Python ([GitHub Link](https://github.com/fhdsl/mcr_example_python))
 - Python users: Look at both the `pyproject.toml` and `uv.lock` file
+
+::::
+
+
+## `rproject.toml` / `pyproject.toml`
+
+- Human readable and writable
+- Get translated to `rv.lock` and `uv.lock`
+
+::::{.panel-tabset group="language"}
+## R
+	
+```r
+[project]
+name = "package-management-r-python"
+r_version = "4.4"
+
+repositories = [
+  {alias = "PPM", url = "https://packagemanager.posit.co/cran/latest"},
+]
+
+dependencies = [
+    "tidyverse",
+    "sf",
+]
+```
+
+## Python
+	
+```python
+[project]
+name = "package-management-r-python"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas>=3.0.0",
+]
+```
+
+::::
+
+## `rv.lock` / `uv.lock`
+
+- Generated by `rv` and `uv`
+- Not meant to be modified by user
+- Contains the dependency tree for installing your packages
+
+
 
 ## Exercise: Clone and restore an environment
 
+1. Open the project in Posit Cloud
 - R Project (`rv` is already installed)
 - Python Project (`uv` is already installed)
 
-Try rendering the `.ipynb` or `.qmd` file in the project - you will get an error
+2. Try rendering the `.ipynb` or `.qmd` file in the project - you will get errors
 
-Under terminal, run:
+3. Under terminal, run:
 
 `rv sync`
 `uv sync`
 
-Try rendering the `.ipynb` (Python) or `.qmd` file
+4. Try rendering the `.ipynb` (Python) or `.qmd` file
 
 ## `uv` and `rv`: start from scratch
 
 - Both `uv` and `rv` expect you to start from scratch
 - Initialize your folder with `uv init`/`rv init`
 - Adds a `.rv`/`.uv` directory 
+- See Making Code Ready for Publication if you are in the middle of an analysis project
 
 ## Adding packages using `uv add`/`rv add`
 
 - You need to declare the packages you want to use
     - `uv add pandas`
     - `rv add tidyverse`
+- `uv` / `rv` will solve the dependency tree and update
+- `rproject.toml` or `pyproject.toml` and the lock files
 
-## Bonus: Try downlading the project and open on your laptop
+## Exercise: Making a lockfile
+
+1. `rv init`
+2. `rv add`
+3. (Optional) `git add .` and `git commit` everything
+
+
+## What if you're already in the middle of analysis?
+
+- Here's some guidance on how to migrate your project
+
+
+## What: Making a Lockfile from your current project
+
+- Usually done after you execute a notebook
+- Takes the packages you have loaded into memory and then writes them to lockfile with versions. 
+
+::: {.panel-tabset}
+
+## Python
+
+Put this code at the bottom of your notebook.
+
+```python
+# pip install session-info
+# uv add session-info
+import session_info as si
+# put this at the end of your notebook
+si.show(na=True, os=True, cpu=False, 
+    jupyter=None, dependencies=None,  
+    write_req_file=True, 
+    req_file_name="requirements.txt")
+```
+
+- Install the [session-info package](https://pypi.org/project/session-info/)
+
+## R
+
+```r
+# install.packages("renv")
+renv::snapshot()
+```
+
+- `renv` will scan your project and note package versions
+- Can use the `renv` package to generate a current list of packages
+- Does not require a virtual environment to be initialized
+- Generates `renv.lock`
+:::
