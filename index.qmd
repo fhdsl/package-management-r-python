@@ -1,7 +1,44 @@
 ---
 title: "Package Management for R and Python"
-format: revealjs
+format: 
+    revealjs:
+        theme: [styles2.scss]
+        scrollable: true
 ---
+
+## Reminder
+
+This workshop adheres to the DaSL Learning Community Participation Guidelines:
+
+[Participation Guidelines](https://ocdo.fredhutch.org/dasl/participation-guidelines/)
+
+Please be respectful of your fellow learners and help each other learn.
+
+Remember, it's dangerous to learn alone! So partner up with someone, it's fun to learn together.
+
+## Introduction (you)
+
+Introduce yourself live or in chat:
+
+- Your name + pronouns / Your group
+- Favorite hot winter beverage
+
+# Hit Record in Teams
+
+
+## Announcements
+
+- [March 11: Data Deep Dive: Building Computational Workflows](https://centernet.fredhutch.org/e/data-science-lab/data-deep-dive.html)
+- [May / Spring Quarter: Bash for Bioinformatics](https://ocdo.fredhutch.org/dasl/courses/bash-for-bioinformatics/)
+
+## TL; DR
+
+- Software environments are a spectrum
+- Package Managers make your work reproducible
+- `uv`/`rv` require you to be proactive (start from scratch)
+- If you're in the middle of an analysis, look at `renv::snapshot()`/`requirements.txt` as good starting points
+- Binder lets you make a pre configured docker container with JupyterLab/RStudio
+- Dockerfiles are the gold standard, but seek help making them
 
 ## Learning Objectives
 
@@ -9,27 +46,17 @@ format: revealjs
 - **Define** a software environment and how it enables reproducible and portable analysis
 - **Manage** software packages reproducibly for an analysis using `uv` (Python) 
 - **Manage** software packages reproducibly for an analysis using `rv` (R)
+- **Explain** what Binder and Dockerfiles are
 
-## What you need to follow along
 
-For R:
-1. [Install `rv`](https://a2-ai.github.io/rv-docs/intro/installation/)
-2. Install `rig` to manage different versions of R
-  a. Mac installer: <https://github.com/r-lib/rig/releases/download/v0.7.1/rig-0.7.1-macOS-x86_64.pkg>
-  b. PC installer: <https://github.com/r-lib/rig/releases/download/v0.7.1/rig-windows-0.7.1.exe>
-  c. `rig add 4.5.2` to add R 4.5.2 on your system 
-3. Install Positron
-4. Clone or download http://github.com/fhdsl/mcr_example_r
-5. Open the folder in Positron (**File >> Open Folder**)
+## Keep in Mind
 
-For Python:
-1. Install Python 3.13
-2. Install `uv`
-  a. [Mac Instructions](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_1) (I use homebrew)
-  b. [PC Instructions](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_2)
-3. Install Positron
-4. Clone or download http://github.com/fhdsl/mcr_example_python
-5. Open the folder in Positron (**File >> Open Folder**)
+- The tools themselves are not necessarily easy to use
+    - Require some command-line knowledge
+- I spent about 20 hours trying to get exercises up and running on Posit Cloud
+    - Had issues with R (restoring took 20 minutes)
+- I will mostly demo on my own machine
+- At the end is a list of software you need to install
 
 ## What is a reproducible environment?
 
@@ -37,13 +64,30 @@ For Python:
 - Fixed to a particular version of Python or R
 - Packages are fixed/pinned to specific version numbers
 
+## What: Reproducible Environments
+
+In order of complexity:
+
+```{mermaid}
+graph LR
+A[Lockfile] --> B
+B[Binder Ready] --> C
+C[Dockerfile]
+```
+
+Tradeoff in terms of work on your side / ease on their side
+
+1. Lockfile (`uv`/`rv`)
+2. Binder Ready
+3. Dockerfile (The most work)
+
 ## Why use package managers?
 
 - Installing the right set of packages can be a pain to reproduce ([Dependency Hell](https://medium.com/knerd/the-nine-circles-of-python-dependency-hell-481d53e3e025))
     - Two different packages will require conflcting versions of another package
 - Future you, different laptop
 - Collaboration with others
-- Dissemination and sharing (see Making Code Ready for Publication)
+- Dissemination and sharing (see [Making Code Ready for Publication](https://hutchdatascience.org/making-code-ready/slides.html#/title-slide))
 
 ## `uv`/`rv`: State of the art package management
 
@@ -53,20 +97,16 @@ For Python:
 ## R
 	
 - `rv` - package manager for R
-- [installation instructions]()
+- [installation instructions](https://a2-ai.github.io/rv-docs/intro/installation/)
 
 
 ## Python
 	
 - `uv` - package manager for Python
-- [installation instructions]()
+- [installation instructions](https://docs.astral.sh/uv/getting-started/installation/)
 	
 ::::
 
-
-## Why not `conda`?
-
-- 
 
 
 ## What: Lockfiles and Environments
@@ -83,13 +123,14 @@ For Python:
 ## What: Lockfile
 
 ```
-my_project/                ## Top level
-├── renv.lock              ## R
-├── requirements.txt       ## Python
+my_project/              ## Top level
+├── rv.lock              ## R
+├── rproject.toml
+├── uv.lock              ## Python
+├── pyproject.toml
 ```
 
 - List of packages and versions that you used in analysis
-- Talk about `rv` and `uv` in Package management session
 
 
 
@@ -132,28 +173,32 @@ my_project/                ## Top level
 ## Python 
 
 ```python
-anyio==4.11.0
-appnope==0.1.4
-argon2-cffi==25.1.0
-argon2-cffi-bindings==25.1.0
-arrow==1.3.0
-asttokens==3.0.0
-async-lru==2.0.5
-attrs==25.3.0
-babel==2.17.0
-beautifulsoup4==4.13.5
-bleach==6.2.0
-certifi==2025.8.3
-cffi==2.0.0
-[...]
+version = 1
+revision = 1
+requires-python = ">=3.13.2"
+resolution-markers = [
+    "python_full_version >= '3.14' and sys_platform == 'win32'",
+    "python_full_version >= '3.14' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version < '3.14' and sys_platform == 'win32'",
+    "python_full_version < '3.14' and sys_platform == 'emscripten'",
+    "python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+]
+
+[[package]]
+name = "branca"
+version = "0.8.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "jinja2" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/32/14/9d409124bda3f4ab7af3802aba07181d1fd56aa96cc4b999faea6a27a0d2/branca-0.8.2.tar.gz", hash = "sha256:e5040f4c286e973658c27de9225c1a5a7356dd0702a7c8d84c0f0dfbde388fe7", size = 27890 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7e/50/fc9680058e63161f2f63165b84c957a0df1415431104c408e8104a3a18ef/branca-0.8.2-py3-none-any.whl", hash = "sha256:2ebaef3983e3312733c1ae2b793b0a8ba3e1c4edeb7598e10328505280cf2f7c", size = 26193 },
+]
 ```
 
 :::
-
-## Exercise: Look at a lockfile (5 minutes)
-
-- R: <https://github.com/fhdsl/mcr_example_r> - look at `renv.lock`
-- Python: <https://github.com/fhdsl/mcr_example_r> - look at `requirements.txt` 
 
 
 ## Why not Conda?
@@ -178,6 +223,7 @@ For more info: <https://conda-forge.fredhutch.org/>
 
 ::::
 
+- Why are there two different lockfiles? Any Guesses?
 
 ## `rproject.toml` / `pyproject.toml`
 
@@ -224,22 +270,22 @@ dependencies = [
 - Not meant to be modified by user
 - Contains the dependency tree for installing your packages
 
+## How do you restore an environment?
+
+- Run `uv sync` and `rv sync` in your project folder
+- Requires you to have the version of R/Python installed
+  - R: `rig`: <https://github.com/r-lib/rig/>
+  - Python: Can install multiple versions using the Python Installers
+
+# Demo: Clone and restore an environment
 
 
-## Exercise: Clone and restore an environment
+# How do we get started?
 
-1. Open the project in Posit Cloud
-- R Project (`rv` is already installed)
-- Python Project (`uv` is already installed)
+## Two Ways
 
-2. Try rendering the `.ipynb` or `.qmd` file in the project - you will get errors
-
-3. Under terminal, run:
-
-`rv sync`
-`uv sync`
-
-4. Try rendering the `.ipynb` (Python) or `.qmd` file
+- Start from scratch with `rv`/`uv`
+- Make a `requirements.txt`/`renv.lock` file and migrate
 
 ## `uv` and `rv`: start from scratch
 
@@ -256,19 +302,17 @@ dependencies = [
 - `uv` / `rv` will solve the dependency tree and update
 - `rproject.toml` or `pyproject.toml` and the lock files
 
-## Exercise: Making a lockfile
+## Example: Making a lockfile
 
 1. `rv init`
-2. `rv add`
+2. `rv add dplyr`
 3. (Optional) `git add .` and `git commit` everything
-
 
 ## What if you're already in the middle of analysis?
 
 - Here's some guidance on how to migrate your project
 
-
-## What: Making a Lockfile from your current project
+## Making a Lockfile from your current project
 
 - Usually done after you execute a notebook
 - Takes the packages you have loaded into memory and then writes them to lockfile with versions. 
@@ -304,3 +348,112 @@ renv::snapshot()
 - Does not require a virtual environment to be initialized
 - Generates `renv.lock`
 :::
+
+# Advanced Topics
+
+## What: Binder Ready Repository
+
+A special way to share your analysis
+
+- Put your project on GitHub
+- Can plug your repository link into `mybinder.org`
+- Generates JupyterLab / RStudio / Shiny Server instance
+
+## What: Binder.org
+
+![](binder.jpg)
+
+## How does Binder work?
+
+- Launches your analysis in a container (Dockerizes your analysis)
+- Uses `requirements.txt` (Python), `environment.yml` (Conda) or `install.R` (R) or Dockerfiles in your repository
+- Installs relevant packages and dependencies into a docker image
+
+
+## `install.R` using `renv` (put in your top directory)
+
+```r
+install.packages("renv")
+renv::restore()
+```
+
+## Dockerfile
+
+- A precise list of instructions to install your computational environment
+- More useful if you are distributing software. 
+- More portable across systems other than Binder
+- Takes a lot of work, builds on the work of others
+
+
+## Dockerfile Tips
+
+- Don’t try to create Dockerfiles from scratch!
+    - [WILDS Docker Library](https://github.com/getwilds/wilds-docker-library) - Dockerfiles for a number of genomics/bioinformatics packages
+    - [Research Computing Data House Calls](https://ocdo.fredhutch.org/programs/dhc.html#research-computing-and-data-management)!
+    - Other Sources: BioC, Rocker Project, WILDS Docker Library
+    - Use https://repo2docker.readthedocs.io/en/latest/
+        - https://repo2docker.readthedocs.io/en/latest/configuration/#config-files
+
+## Dockerfile example
+
+```
+FROM rocker/geospatial:4.5.0
+
+LABEL org.opencontainers.image.licenses="GPL-2.0-or-later" \
+      org.opencontainers.image.source="https://github.com/achubaty/rocker-files" \
+      org.opencontainers.image.vendor="FOR-CAST Research & Analytics" \
+      org.opencontainers.image.authors="achubaty@for-cast.ca"
+
+COPY scripts/* /rocker-files_scripts/
+
+RUN /rocker-files_scripts/install_additional_libs.sh
+RUN /rocker-files_scripts/install_geospatial_extras.sh
+RUN /rocker-files_scripts/install_geospatial_R.sh
+```
+
+<https://github.com/achubaty/rocker-files/blob/main/dockerfiles/r-spatial-base_4.5.Dockerfile>
+
+## WILDS WDL Library Example
+
+
+<https://github.com/getwilds/wilds-docker-library/blob/main/bcftools/Dockerfile_latest>
+
+## Using Containers on HPC
+
+- Use Apptainer to run Docker Containers: <https://bashforbio.netlify.app/04_containers_workflows.html#using-a-container>
+- Understand how to bind/mount file paths to the container: <https://bashforbio.netlify.app/testing.html#sec-bindpaths>
+
+
+## TL; DR
+
+- Software environments are a spectrum
+- Package Managers make your work reproducible
+- `uv`/`rv` require you to be proactive (start from scratch)
+- If you're in the middle of an analysis, look at `renv::snapshot()`/`requirements.txt` as good starting points
+- Binder lets you make a pre configured docker container with JupyterLab/RStudio
+- Dockerfiles are the gold standard, but seek help making them
+
+
+## What you need to reproduce the examples
+
+For R:
+
+1. [Install `rv`](https://a2-ai.github.io/rv-docs/intro/installation/)
+2. Install `rig` to manage different versions of R
+    a. Mac installer: <https://github.com/r-lib/rig/releases/download/v0.7.1/rig-0.7.1-macOS-x86_64.pkg>
+    b. PC installer: <https://github.com/r-lib/rig/releases/download/v0.7.1/rig-windows-0.7.1.exe>
+  c. `rig add 4.5.2` to add R 4.5.2 on your system 
+3. Install Positron
+4. Clone or download http://github.com/fhdsl/mcr_example_r
+5. Open the folder in Positron (**File >> Open Folder**)
+
+## For Python
+
+1. Install Python 3.13
+2. Install `uv`
+    a. [Mac Instructions](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_1) (I use homebrew)
+    b. [PC Instructions](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_2)
+3. Install Positron
+4. Clone or download http://github.com/fhdsl/mcr_example_python
+5. Open the folder in Positron (**File >> Open Folder**)
+
