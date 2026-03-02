@@ -213,8 +213,8 @@
 <h2>Introduction (you)</h2>
 <p>Introduce yourself live or in chat:</p>
 <ul>
-<li>Your name + pronouns / Your group</li>
-<li>Favorite hot winter beverage</li>
+<li class="fragment">Your name + pronouns / Your group</li>
+<li class="fragment">Favorite hot winter beverage</li>
 </ul>
 </section>
 <section>
@@ -225,52 +225,52 @@
 <section id="announcements" class="slide level2">
 <h2>Announcements</h2>
 <ul>
-<li><a href="https://centernet.fredhutch.org/e/data-science-lab/data-deep-dive.html">March 11: Data Deep Dive: Building Computational Workflows</a></li>
-<li><a href="https://ocdo.fredhutch.org/dasl/courses/bash-for-bioinformatics/">May / Spring Quarter: Bash for Bioinformatics</a></li>
+<li class="fragment"><a href="https://centernet.fredhutch.org/e/data-science-lab/data-deep-dive.html">March 11: Data Deep Dive: Building Computational Workflows</a></li>
+<li class="fragment"><a href="https://ocdo.fredhutch.org/dasl/courses/bash-for-bioinformatics/">May / Spring Quarter: Bash for Bioinformatics</a></li>
 </ul>
 </section>
 <section id="tl-dr" class="slide level2">
 <h2>TL; DR</h2>
 <ul>
-<li>Software environments are a spectrum</li>
-<li>Package Managers make your work reproducible</li>
-<li><code>uv</code>/<code>rv</code> require you to be proactive (start from scratch)</li>
-<li>If you’re in the middle of an analysis, look at <code>renv::snapshot()</code>/<code>requirements.txt</code> as good starting points</li>
-<li>Binder lets you make a pre configured docker container with JupyterLab/RStudio</li>
-<li>Dockerfiles are the gold standard, but seek help making them</li>
+<li class="fragment">Software environments are a spectrum</li>
+<li class="fragment">Package Managers make your work reproducible</li>
+<li class="fragment"><code>uv</code>/<code>rv</code> require you to be proactive (start from scratch)</li>
+<li class="fragment">If you’re in the middle of an analysis, look at <code>renv::snapshot()</code>/<code>requirements.txt</code> as good starting points</li>
+<li class="fragment">Binder lets you make a pre configured docker container with JupyterLab/RStudio</li>
+<li class="fragment">Dockerfiles are the gold standard, but seek help making them</li>
 </ul>
 </section>
 <section id="learning-objectives" class="slide level2">
 <h2>Learning Objectives</h2>
 <ul>
-<li><strong>Explain</strong> why package management is complicated for both Python and R</li>
-<li><strong>Define</strong> a software environment and how it enables reproducible and portable analysis</li>
-<li><strong>Manage</strong> software packages reproducibly for an analysis using <code>uv</code> (Python)</li>
-<li><strong>Manage</strong> software packages reproducibly for an analysis using <code>rv</code> (R)</li>
-<li><strong>Explain</strong> what Binder and Dockerfiles are</li>
+<li class="fragment"><strong>Explain</strong> why package management is complicated for both Python and R</li>
+<li class="fragment"><strong>Define</strong> a software environment and how it enables reproducible and portable analysis</li>
+<li class="fragment"><strong>Manage</strong> software packages reproducibly for an analysis using <code>uv</code> (Python)</li>
+<li class="fragment"><strong>Manage</strong> software packages reproducibly for an analysis using <code>rv</code> (R)</li>
+<li class="fragment"><strong>Explain</strong> what Binder and Dockerfiles are</li>
 </ul>
 </section>
 <section id="keep-in-mind" class="slide level2">
 <h2>Keep in Mind</h2>
 <ul>
-<li>The tools themselves are not necessarily easy to use
+<li class="fragment">The tools themselves are not necessarily easy to use
 <ul>
-<li>Require some command-line knowledge</li>
+<li class="fragment">Require some command-line knowledge</li>
 </ul></li>
-<li>I spent about 20 hours trying to get exercises up and running on Posit Cloud
+<li class="fragment">I spent about 20 hours trying to get exercises up and running on Posit Cloud
 <ul>
-<li>Had issues with R (restoring took 20 minutes)</li>
+<li class="fragment">Had issues with R (restoring took 20 minutes)</li>
 </ul></li>
-<li>I will mostly demo on my own machine</li>
-<li>At the end is a list of software you need to install</li>
+<li class="fragment">I will mostly demo on my own machine</li>
+<li class="fragment">At the end is a list of software you need to install</li>
 </ul>
 </section>
 <section id="what-is-a-reproducible-environment" class="slide level2">
 <h2>What is a reproducible environment?</h2>
 <ul>
-<li>Install packages with annotations, run anywhere</li>
-<li>Fixed to a particular version of Python or R</li>
-<li>Packages are fixed/pinned to specific version numbers</li>
+<li class="fragment">Install packages with annotations, run anywhere</li>
+<li class="fragment">Fixed to a particular version of Python or R</li>
+<li class="fragment">Packages are fixed/pinned to specific version numbers</li>
 </ul>
 </section>
 <section id="what-reproducible-environments" class="slide level2 scrollable">
@@ -293,41 +293,41 @@ C[Dockerfile]
 </div>
 <p>Tradeoff in terms of work on your side / ease on their side</p>
 <ol type="1">
-<li>Lockfile (<code>uv</code>/<code>rv</code>)</li>
-<li>Binder Ready</li>
-<li>Dockerfile (The most work)</li>
+<li class="fragment">Lockfile (<code>uv</code>/<code>rv</code>)</li>
+<li class="fragment">Binder Ready</li>
+<li class="fragment">Dockerfile (The most work)</li>
 </ol>
 </section>
 <section id="why-use-package-managers" class="slide level2">
 <h2>Why use package managers?</h2>
 <ul>
-<li>Installing the right set of packages can be a pain to reproduce (<a href="https://medium.com/knerd/the-nine-circles-of-python-dependency-hell-481d53e3e025">Dependency Hell</a>)
+<li class="fragment">Installing the right set of packages can be a pain to reproduce (<a href="https://medium.com/knerd/the-nine-circles-of-python-dependency-hell-481d53e3e025">Dependency Hell</a>)
 <ul>
-<li>Two different packages will require conflcting versions of another package</li>
+<li class="fragment">Two different packages will require conflcting versions of another package</li>
 </ul></li>
-<li>Future you, different laptop</li>
-<li>Collaboration with others</li>
-<li>Dissemination and sharing (see <a href="https://hutchdatascience.org/making-code-ready/slides.html#/title-slide">Making Code Ready for Publication</a>)</li>
+<li class="fragment">Future you, different laptop</li>
+<li class="fragment">Collaboration with others</li>
+<li class="fragment">Dissemination and sharing (see <a href="https://hutchdatascience.org/making-code-ready/slides.html#/title-slide">Making Code Ready for Publication</a>)</li>
 </ul>
 </section>
 <section id="uvrv-state-of-the-art-package-management" class="slide level2">
 <h2><code>uv</code>/<code>rv</code>: State of the art package management</h2>
 <ul>
-<li>Both work on the command line</li>
+<li class="fragment">Both work on the command line</li>
 </ul>
 <div class="panel-tabset" data-group="language">
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">R</a></li><li><a href="#tabset-1-2">Python</a></li></ul>
 <div class="tab-content" data-group="language">
 <div id="tabset-1-1">
 <ul>
-<li><code>rv</code> - package manager for R</li>
-<li><a href="https://a2-ai.github.io/rv-docs/intro/installation/">installation instructions</a></li>
+<li class="fragment"><code>rv</code> - package manager for R</li>
+<li class="fragment"><a href="https://a2-ai.github.io/rv-docs/intro/installation/">installation instructions</a></li>
 </ul>
 </div>
 <div id="tabset-1-2">
 <ul>
-<li><code>uv</code> - package manager for Python</li>
-<li><a href="https://docs.astral.sh/uv/getting-started/installation/">installation instructions</a></li>
+<li class="fragment"><code>uv</code> - package manager for Python</li>
+<li class="fragment"><a href="https://docs.astral.sh/uv/getting-started/installation/">installation instructions</a></li>
 </ul>
 </div>
 </div>
@@ -336,16 +336,16 @@ C[Dockerfile]
 <section id="what-lockfiles-and-environments" class="slide level2">
 <h2>What: Lockfiles and Environments</h2>
 <ul>
-<li>Lockfiles are a recipe for recreating an environment</li>
-<li>We use tools to recreate them:
+<li class="fragment">Lockfiles are a recipe for recreating an environment</li>
+<li class="fragment">We use tools to recreate them:
 <ul>
-<li>R: <code>renv</code> and <code>rv</code></li>
-<li>Python: <code>venv</code> and <code>uv</code></li>
+<li class="fragment">R: <code>renv</code> and <code>rv</code></li>
+<li class="fragment">Python: <code>venv</code> and <code>uv</code></li>
 </ul></li>
-<li>Environments live in our folder isolated from everything else
+<li class="fragment">Environments live in our folder isolated from everything else
 <ul>
-<li>Versions of R/Python</li>
-<li>Libraries of packages</li>
+<li class="fragment">Versions of R/Python</li>
+<li class="fragment">Libraries of packages</li>
 </ul></li>
 </ul>
 </section>
@@ -357,7 +357,7 @@ C[Dockerfile]
 ├── uv.lock              ## Python
 ├── pyproject.toml</code></pre>
 <ul>
-<li>List of packages and versions that you used in analysis</li>
+<li class="fragment">List of packages and versions that you used in analysis</li>
 </ul>
 </section>
 <section id="lockfile-examples" class="slide level2">
@@ -434,27 +434,27 @@ C[Dockerfile]
 <div class="tab-content" data-group="language">
 <div id="tabset-3-1">
 <ul>
-<li>R (<a href="(https://github.com/fhdsl/mcr_example_r)">GitHub Link</a></li>
-<li>R users: Look at both the <code>rproject.toml</code> and <code>rv.lock</code> file</li>
+<li class="fragment">R (<a href="(https://github.com/fhdsl/mcr_example_r)">GitHub Link</a></li>
+<li class="fragment">R users: Look at both the <code>rproject.toml</code> and <code>rv.lock</code> file</li>
 </ul>
 </div>
 <div id="tabset-3-2">
 <ul>
-<li>Python (<a href="https://github.com/fhdsl/mcr_example_python">GitHub Link</a>)</li>
-<li>Python users: Look at both the <code>pyproject.toml</code> and <code>uv.lock</code> file</li>
+<li class="fragment">Python (<a href="https://github.com/fhdsl/mcr_example_python">GitHub Link</a>)</li>
+<li class="fragment">Python users: Look at both the <code>pyproject.toml</code> and <code>uv.lock</code> file</li>
 </ul>
 </div>
 </div>
 </div>
 <ul>
-<li>Why are there two different lockfiles? Any Guesses?</li>
+<li class="fragment">Why are there two different lockfiles? Any Guesses?</li>
 </ul>
 </section>
 <section id="rproject.toml-pyproject.toml" class="slide level2">
 <h2><code>rproject.toml</code> / <code>pyproject.toml</code></h2>
 <ul>
-<li>Human readable and writable</li>
-<li>Get translated to <code>rv.lock</code> and <code>uv.lock</code></li>
+<li class="fragment">Human readable and writable</li>
+<li class="fragment">Get translated to <code>rv.lock</code> and <code>uv.lock</code></li>
 </ul>
 <div class="panel-tabset" data-group="language">
 <ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">R</a></li><li><a href="#tabset-4-2">Python</a></li></ul>
@@ -490,19 +490,19 @@ C[Dockerfile]
 <section id="rv.lock-uv.lock" class="slide level2">
 <h2><code>rv.lock</code> / <code>uv.lock</code></h2>
 <ul>
-<li>Generated by <code>rv</code> and <code>uv</code></li>
-<li>Not meant to be modified by user</li>
-<li>Contains the dependency tree for installing your packages</li>
+<li class="fragment">Generated by <code>rv</code> and <code>uv</code></li>
+<li class="fragment">Not meant to be modified by user</li>
+<li class="fragment">Contains the dependency tree for installing your packages</li>
 </ul>
 </section>
 <section id="how-do-you-restore-an-environment" class="slide level2">
 <h2>How do you restore an environment?</h2>
 <ul>
-<li>Run <code>uv sync</code> and <code>rv sync</code> in your project folder</li>
-<li>Requires you to have the version of R/Python installed
+<li class="fragment">Run <code>uv sync</code> and <code>rv sync</code> in your project folder</li>
+<li class="fragment">Requires you to have the version of R/Python installed
 <ul>
-<li>R: <code>rig</code>: <a href="https://github.com/r-lib/rig/" class="uri">https://github.com/r-lib/rig/</a></li>
-<li>Python: Can install multiple versions using the Python Installers</li>
+<li class="fragment">R: <code>rig</code>: <a href="https://github.com/r-lib/rig/" class="uri">https://github.com/r-lib/rig/</a></li>
+<li class="fragment">Python: Can install multiple versions using the Python Installers</li>
 </ul></li>
 </ul>
 </section></section>
@@ -519,50 +519,50 @@ C[Dockerfile]
 <section id="two-ways" class="slide level2">
 <h2>Two Ways</h2>
 <ul>
-<li>Start from scratch with <code>rv</code>/<code>uv</code></li>
-<li>Make a <code>requirements.txt</code>/<code>renv.lock</code> file and migrate</li>
+<li class="fragment">Start from scratch with <code>rv</code>/<code>uv</code></li>
+<li class="fragment">Make a <code>requirements.txt</code>/<code>renv.lock</code> file and migrate</li>
 </ul>
 </section>
 <section id="uv-and-rv-start-from-scratch" class="slide level2">
 <h2><code>uv</code> and <code>rv</code>: start from scratch</h2>
 <ul>
-<li>Both <code>uv</code> and <code>rv</code> expect you to start from scratch</li>
-<li>Initialize your folder with <code>uv init</code>/<code>rv init</code></li>
-<li>Adds a <code>.rv</code>/<code>.uv</code> directory</li>
-<li>See Making Code Ready for Publication if you are in the middle of an analysis project</li>
+<li class="fragment">Both <code>uv</code> and <code>rv</code> expect you to start from scratch</li>
+<li class="fragment">Initialize your folder with <code>uv init</code>/<code>rv init</code></li>
+<li class="fragment">Adds a <code>.rv</code>/<code>.uv</code> directory</li>
+<li class="fragment">See Making Code Ready for Publication if you are in the middle of an analysis project</li>
 </ul>
 </section>
 <section id="adding-packages-using-uv-addrv-add" class="slide level2">
 <h2>Adding packages using <code>uv add</code>/<code>rv add</code></h2>
 <ul>
-<li>You need to declare the packages you want to use
+<li class="fragment">You need to declare the packages you want to use
 <ul>
-<li><code>uv add pandas</code></li>
-<li><code>rv add tidyverse</code></li>
+<li class="fragment"><code>uv add pandas</code></li>
+<li class="fragment"><code>rv add tidyverse</code></li>
 </ul></li>
-<li><code>uv</code> / <code>rv</code> will solve the dependency tree and update</li>
-<li><code>rproject.toml</code> or <code>pyproject.toml</code> and the lock files</li>
+<li class="fragment"><code>uv</code> / <code>rv</code> will solve the dependency tree and update</li>
+<li class="fragment"><code>rproject.toml</code> or <code>pyproject.toml</code> and the lock files</li>
 </ul>
 </section>
 <section id="example-making-a-lockfile" class="slide level2 scrollable">
 <h2>Example: Making a lockfile</h2>
 <ol type="1">
-<li><code>rv init</code></li>
-<li><code>rv add dplyr</code></li>
-<li>(Optional) <code>git add .</code> and <code>git commit</code> everything</li>
+<li class="fragment"><code>rv init</code></li>
+<li class="fragment"><code>rv add dplyr</code></li>
+<li class="fragment">(Optional) <code>git add .</code> and <code>git commit</code> everything</li>
 </ol>
 </section>
 <section id="what-if-youre-already-in-the-middle-of-analysis" class="slide level2">
 <h2>What if you’re already in the middle of analysis?</h2>
 <ul>
-<li>Here’s some guidance on how to migrate your project</li>
+<li class="fragment">Here’s some guidance on how to migrate your project</li>
 </ul>
 </section>
 <section id="making-a-lockfile-from-your-current-project" class="slide level2">
 <h2>Making a Lockfile from your current project</h2>
 <ul>
-<li>Usually done after you execute a notebook</li>
-<li>Takes the packages you have loaded into memory and then writes them to lockfile with versions.</li>
+<li class="fragment">Usually done after you execute a notebook</li>
+<li class="fragment">Takes the packages you have loaded into memory and then writes them to lockfile with versions.</li>
 </ul>
 <div class="panel-tabset">
 <ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Python</a></li><li><a href="#tabset-5-2">R</a></li></ul>
@@ -578,17 +578,17 @@ C[Dockerfile]
 <span id="cb6-7"><a></a>    write_req_file<span class="op">=</span><span class="va">True</span>, </span>
 <span id="cb6-8"><a></a>    req_file_name<span class="op">=</span><span class="st">"requirements.txt"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>Install the <a href="https://pypi.org/project/session-info/">session-info package</a></li>
+<li class="fragment">Install the <a href="https://pypi.org/project/session-info/">session-info package</a></li>
 </ul>
 </div>
 <div id="tabset-5-2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># install.packages("renv")</span></span>
 <span id="cb7-2"><a></a>renv<span class="sc">::</span><span class="fu">snapshot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li><code>renv</code> will scan your project and note package versions</li>
-<li>Can use the <code>renv</code> package to generate a current list of packages</li>
-<li>Does not require a virtual environment to be initialized</li>
-<li>Generates <code>renv.lock</code></li>
+<li class="fragment"><code>renv</code> will scan your project and note package versions</li>
+<li class="fragment">Can use the <code>renv</code> package to generate a current list of packages</li>
+<li class="fragment">Does not require a virtual environment to be initialized</li>
+<li class="fragment">Generates <code>renv.lock</code></li>
 </ul>
 </div>
 </div>
@@ -603,9 +603,9 @@ C[Dockerfile]
 <h2>What: Binder Ready Repository</h2>
 <p>A special way to share your analysis</p>
 <ul>
-<li>Put your project on GitHub</li>
-<li>Can plug your repository link into <code>mybinder.org</code></li>
-<li>Generates JupyterLab / RStudio / Shiny Server instance</li>
+<li class="fragment">Put your project on GitHub</li>
+<li class="fragment">Can plug your repository link into <code>mybinder.org</code></li>
+<li class="fragment">Generates JupyterLab / RStudio / Shiny Server instance</li>
 </ul>
 </section>
 <section id="what-binder.org" class="slide level2">
@@ -615,9 +615,9 @@ C[Dockerfile]
 <section id="how-does-binder-work" class="slide level2">
 <h2>How does Binder work?</h2>
 <ul>
-<li>Launches your analysis in a container (Dockerizes your analysis)</li>
-<li>Uses <code>requirements.txt</code> (Python), <code>environment.yml</code> (Conda) or <code>install.R</code> (R) or Dockerfiles in your repository</li>
-<li>Installs relevant packages and dependencies into a docker image</li>
+<li class="fragment">Launches your analysis in a container (Dockerizes your analysis)</li>
+<li class="fragment">Uses <code>requirements.txt</code> (Python), <code>environment.yml</code> (Conda) or <code>install.R</code> (R) or Dockerfiles in your repository</li>
+<li class="fragment">Installs relevant packages and dependencies into a docker image</li>
 </ul>
 </section>
 <section id="install.r-using-renv-put-in-your-top-directory" class="slide level2">
@@ -628,23 +628,23 @@ C[Dockerfile]
 <section id="dockerfile" class="slide level2">
 <h2>Dockerfile</h2>
 <ul>
-<li>A precise list of instructions to install your computational environment</li>
-<li>More useful if you are distributing software.</li>
-<li>More portable across systems other than Binder</li>
-<li>Takes a lot of work, builds on the work of others</li>
+<li class="fragment">A precise list of instructions to install your computational environment</li>
+<li class="fragment">More useful if you are distributing software.</li>
+<li class="fragment">More portable across systems other than Binder</li>
+<li class="fragment">Takes a lot of work, builds on the work of others</li>
 </ul>
 </section>
 <section id="dockerfile-tips" class="slide level2">
 <h2>Dockerfile Tips</h2>
 <ul>
-<li>Don’t try to create Dockerfiles from scratch!
+<li class="fragment">Don’t try to create Dockerfiles from scratch!
 <ul>
-<li><a href="https://github.com/getwilds/wilds-docker-library">WILDS Docker Library</a> - Dockerfiles for a number of genomics/bioinformatics packages</li>
-<li><a href="https://ocdo.fredhutch.org/programs/dhc.html#research-computing-and-data-management">Research Computing Data House Calls</a>!</li>
-<li>Other Sources: BioC, Rocker Project, WILDS Docker Library</li>
-<li>Use https://repo2docker.readthedocs.io/en/latest/
+<li class="fragment"><a href="https://github.com/getwilds/wilds-docker-library">WILDS Docker Library</a> - Dockerfiles for a number of genomics/bioinformatics packages</li>
+<li class="fragment"><a href="https://ocdo.fredhutch.org/programs/dhc.html#research-computing-and-data-management">Research Computing Data House Calls</a>!</li>
+<li class="fragment">Other Sources: BioC, Rocker Project, WILDS Docker Library</li>
+<li class="fragment">Use https://repo2docker.readthedocs.io/en/latest/
 <ul>
-<li>https://repo2docker.readthedocs.io/en/latest/configuration/#config-files</li>
+<li class="fragment">https://repo2docker.readthedocs.io/en/latest/configuration/#config-files</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -672,53 +672,53 @@ RUN /rocker-files_scripts/install_geospatial_R.sh</code></pre>
 <section id="using-containers-on-hpc" class="slide level2">
 <h2>Using Containers on HPC</h2>
 <ul>
-<li>Use Apptainer to run Docker Containers: <a href="https://bashforbio.netlify.app/04_containers_workflows.html#using-a-container" class="uri">https://bashforbio.netlify.app/04_containers_workflows.html#using-a-container</a></li>
-<li>Understand how to bind/mount file paths to the container: <a href="https://bashforbio.netlify.app/testing.html#sec-bindpaths" class="uri">https://bashforbio.netlify.app/testing.html#sec-bindpaths</a></li>
+<li class="fragment">Use Apptainer to run Docker Containers: <a href="https://bashforbio.netlify.app/04_containers_workflows.html#using-a-container" class="uri">https://bashforbio.netlify.app/04_containers_workflows.html#using-a-container</a></li>
+<li class="fragment">Understand how to bind/mount file paths to the container: <a href="https://bashforbio.netlify.app/testing.html#sec-bindpaths" class="uri">https://bashforbio.netlify.app/testing.html#sec-bindpaths</a></li>
 </ul>
 </section>
 <section id="tl-dr-1" class="slide level2">
 <h2>TL; DR</h2>
 <ul>
-<li>Software environments are a spectrum</li>
-<li>Package Managers make your work reproducible</li>
-<li><code>uv</code>/<code>rv</code> require you to be proactive (start from scratch)</li>
-<li>If you’re in the middle of an analysis, look at <code>renv::snapshot()</code>/<code>requirements.txt</code> as good starting points</li>
-<li>Binder lets you make a pre configured docker container with JupyterLab/RStudio</li>
-<li>Dockerfiles are the gold standard, but seek help making them</li>
+<li class="fragment">Software environments are a spectrum</li>
+<li class="fragment">Package Managers make your work reproducible</li>
+<li class="fragment"><code>uv</code>/<code>rv</code> require you to be proactive (start from scratch)</li>
+<li class="fragment">If you’re in the middle of an analysis, look at <code>renv::snapshot()</code>/<code>requirements.txt</code> as good starting points</li>
+<li class="fragment">Binder lets you make a pre configured docker container with JupyterLab/RStudio</li>
+<li class="fragment">Dockerfiles are the gold standard, but seek help making them</li>
 </ul>
 </section>
 <section id="what-you-need-to-reproduce-the-examples" class="slide level2 scrollable">
 <h2>What you need to reproduce the examples</h2>
 <p>For R:</p>
 <ol type="1">
-<li><a href="https://a2-ai.github.io/rv-docs/intro/installation/">Install <code>rv</code></a></li>
-<li>Install <code>rig</code> to manage different versions of R
+<li class="fragment"><a href="https://a2-ai.github.io/rv-docs/intro/installation/">Install <code>rv</code></a></li>
+<li class="fragment">Install <code>rig</code> to manage different versions of R
 <ol type="a">
-<li>Mac installer: <a href="https://github.com/r-lib/rig/releases/download/v0.7.1/rig-0.7.1-macOS-x86_64.pkg" class="uri">https://github.com/r-lib/rig/releases/download/v0.7.1/rig-0.7.1-macOS-x86_64.pkg</a></li>
-<li>PC installer: <a href="https://github.com/r-lib/rig/releases/download/v0.7.1/rig-windows-0.7.1.exe" class="uri">https://github.com/r-lib/rig/releases/download/v0.7.1/rig-windows-0.7.1.exe</a></li>
+<li class="fragment">Mac installer: <a href="https://github.com/r-lib/rig/releases/download/v0.7.1/rig-0.7.1-macOS-x86_64.pkg" class="uri">https://github.com/r-lib/rig/releases/download/v0.7.1/rig-0.7.1-macOS-x86_64.pkg</a></li>
+<li class="fragment">PC installer: <a href="https://github.com/r-lib/rig/releases/download/v0.7.1/rig-windows-0.7.1.exe" class="uri">https://github.com/r-lib/rig/releases/download/v0.7.1/rig-windows-0.7.1.exe</a></li>
 </ol></li>
 </ol>
 <ol start="3" type="a">
-<li><code>rig add 4.5.2</code> to add R 4.5.2 on your system</li>
+<li class="fragment"><code>rig add 4.5.2</code> to add R 4.5.2 on your system</li>
 </ol>
 <ol start="3" type="1">
-<li>Install Positron</li>
-<li>Clone or download http://github.com/fhdsl/mcr_example_r</li>
-<li>Open the folder in Positron (<strong>File &gt;&gt; Open Folder</strong>)</li>
+<li class="fragment">Install Positron</li>
+<li class="fragment">Clone or download http://github.com/fhdsl/mcr_example_r</li>
+<li class="fragment">Open the folder in Positron (<strong>File &gt;&gt; Open Folder</strong>)</li>
 </ol>
 </section>
 <section id="for-python" class="slide level2 scrollable">
 <h2>For Python</h2>
 <ol type="1">
-<li>Install Python 3.13</li>
-<li>Install <code>uv</code>
+<li class="fragment">Install Python 3.13</li>
+<li class="fragment">Install <code>uv</code>
 <ol type="a">
-<li><a href="https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_1">Mac Instructions</a> (I use homebrew)</li>
-<li><a href="https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_2">PC Instructions</a></li>
+<li class="fragment"><a href="https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_1">Mac Instructions</a> (I use homebrew)</li>
+<li class="fragment"><a href="https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_2">PC Instructions</a></li>
 </ol></li>
-<li>Install Positron</li>
-<li>Clone or download http://github.com/fhdsl/mcr_example_python</li>
-<li>Open the folder in Positron (<strong>File &gt;&gt; Open Folder</strong>)</li>
+<li class="fragment">Install Positron</li>
+<li class="fragment">Clone or download http://github.com/fhdsl/mcr_example_python</li>
+<li class="fragment">Open the folder in Positron (<strong>File &gt;&gt; Open Folder</strong>)</li>
 </ol>
 
 
