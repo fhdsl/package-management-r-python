@@ -209,12 +209,20 @@
 <p>Please be respectful of your fellow learners and help each other learn.</p>
 <p>Remember, it’s dangerous to learn alone! So partner up with someone, it’s fun to learn together.</p>
 </section>
+<section id="introduction-us" class="slide level2">
+<h2>Introduction (us)</h2>
+<ul>
+<li class="fragment">Ted Laderas, Director of Training / Community, OCDO</li>
+<li class="fragment">Taylor Firman, Research Informatics Manager, OCDO</li>
+<li class="fragment">Emma Bishop, Research Informatics Data Scientist, OCDO</li>
+</ul>
+</section>
 <section id="introduction-you" class="slide level2">
 <h2>Introduction (you)</h2>
 <p>Introduce yourself live or in chat:</p>
 <ul>
 <li class="fragment">Your name + pronouns / Your group</li>
-<li class="fragment">Favorite hot winter beverage</li>
+<li class="fragment">What will you do with the extra evening hours after Daylight Savings Time?</li>
 </ul>
 </section>
 <section>
@@ -310,10 +318,27 @@ C[Dockerfile]
 <li class="fragment">Dissemination and sharing (see <a href="https://hutchdatascience.org/making-code-ready/slides.html#/title-slide">Making Code Ready for Publication</a>)</li>
 </ul>
 </section>
+<section id="what-lockfiles-and-environments" class="slide level2">
+<h2>What: Lockfiles and Environments</h2>
+<ul>
+<li class="fragment">Lockfiles are a recipe for recreating an environment</li>
+<li class="fragment">We use tools to recreate them:
+<ul>
+<li class="fragment">R: <code>renv</code> and <code>rv</code></li>
+<li class="fragment">Python: <code>venv</code> and <code>uv</code></li>
+</ul></li>
+<li class="fragment">Environments live in our folder isolated from everything else
+<ul>
+<li class="fragment">Versions of R/Python</li>
+<li class="fragment">Libraries of packages</li>
+</ul></li>
+</ul>
+</section>
 <section id="uvrv-state-of-the-art-package-management" class="slide level2">
 <h2><code>uv</code>/<code>rv</code>: State of the art package management</h2>
 <ul>
 <li class="fragment">Both work on the command line</li>
+<li class="fragment">Much faster to install from binaries</li>
 </ul>
 <div class="panel-tabset" data-group="language">
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">R</a></li><li><a href="#tabset-1-2">Python</a></li></ul>
@@ -332,22 +357,6 @@ C[Dockerfile]
 </div>
 </div>
 </div>
-</section>
-<section id="what-lockfiles-and-environments" class="slide level2">
-<h2>What: Lockfiles and Environments</h2>
-<ul>
-<li class="fragment">Lockfiles are a recipe for recreating an environment</li>
-<li class="fragment">We use tools to recreate them:
-<ul>
-<li class="fragment">R: <code>renv</code> and <code>rv</code></li>
-<li class="fragment">Python: <code>venv</code> and <code>uv</code></li>
-</ul></li>
-<li class="fragment">Environments live in our folder isolated from everything else
-<ul>
-<li class="fragment">Versions of R/Python</li>
-<li class="fragment">Libraries of packages</li>
-</ul></li>
-</ul>
 </section>
 <section id="what-lockfile" class="slide level2">
 <h2>What: Lockfile</h2>

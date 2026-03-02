@@ -11,7 +11,7 @@
     "href": "index.html#introduction-you",
     "title": "Package Management for R and Python",
     "section": "Introduction (you)",
-    "text": "Introduction (you)\nIntroduce yourself live or in chat:\n\nYour name + pronouns / Your group\nFavorite hot winter beverage"
+    "text": "Introduction (you)\nIntroduce yourself live or in chat:\n\nYour name + pronouns / Your group\nWhat will you do with the extra evening hours after Daylight Savings Time?"
   },
   {
     "objectID": "index.html#announcements",
@@ -67,7 +67,7 @@
     "href": "index.html#uvrv-state-of-the-art-package-management",
     "title": "Package Management for R and Python",
     "section": "uv/rv: State of the art package management",
-    "text": "uv/rv: State of the art package management\n\nBoth work on the command line\n\n\nRPython\n\n\n\nrv - package manager for R\ninstallation instructions\n\n\n\n\nuv - package manager for Python\ninstallation instructions"
+    "text": "uv/rv: State of the art package management\n\nBoth work on the command line\nMuch faster to install from binaries\n\n\nRPython\n\n\n\nrv - package manager for R\ninstallation instructions\n\n\n\n\nuv - package manager for Python\ninstallation instructions"
   },
   {
     "objectID": "index.html#what-lockfiles-and-environments",
@@ -250,5 +250,12 @@
     "title": "Package Management for R and Python",
     "section": "For Python",
     "text": "For Python\n\nInstall Python 3.13\nInstall uv\n\nMac Instructions (I use homebrew)\nPC Instructions\n\nInstall Positron\nClone or download http://github.com/fhdsl/mcr_example_python\nOpen the folder in Positron (File &gt;&gt; Open Folder)"
+  },
+  {
+    "objectID": "index.html#introduction-us",
+    "href": "index.html#introduction-us",
+    "title": "Package Management for R and Python",
+    "section": "Introduction (us)",
+    "text": "Introduction (us)\n\nTed Laderas, Director of Training / Community, OCDO\nTaylor Firman, Research Informatics Manager, OCDO\nEmma Bishop, Research Informatics Data Scientist, OCDO"
   }
 ]
