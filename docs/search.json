@@ -1,0 +1,254 @@
+[
+  {
+    "objectID": "index.html#reminder",
+    "href": "index.html#reminder",
+    "title": "Package Management for R and Python",
+    "section": "Reminder",
+    "text": "Reminder\nThis workshop adheres to the DaSL Learning Community Participation Guidelines:\nParticipation Guidelines\nPlease be respectful of your fellow learners and help each other learn.\nRemember, it’s dangerous to learn alone! So partner up with someone, it’s fun to learn together."
+  },
+  {
+    "objectID": "index.html#introduction-you",
+    "href": "index.html#introduction-you",
+    "title": "Package Management for R and Python",
+    "section": "Introduction (you)",
+    "text": "Introduction (you)\nIntroduce yourself live or in chat:\n\nYour name + pronouns / Your group\nFavorite hot winter beverage"
+  },
+  {
+    "objectID": "index.html#announcements",
+    "href": "index.html#announcements",
+    "title": "Package Management for R and Python",
+    "section": "Announcements",
+    "text": "Announcements\n\nMarch 11: Data Deep Dive: Building Computational Workflows\nMay / Spring Quarter: Bash for Bioinformatics"
+  },
+  {
+    "objectID": "index.html#tl-dr",
+    "href": "index.html#tl-dr",
+    "title": "Package Management for R and Python",
+    "section": "TL; DR",
+    "text": "TL; DR\n\nSoftware environments are a spectrum\nPackage Managers make your work reproducible\nuv/rv require you to be proactive (start from scratch)\nIf you’re in the middle of an analysis, look at renv::snapshot()/requirements.txt as good starting points\nBinder lets you make a pre configured docker container with JupyterLab/RStudio\nDockerfiles are the gold standard, but seek help making them"
+  },
+  {
+    "objectID": "index.html#learning-objectives",
+    "href": "index.html#learning-objectives",
+    "title": "Package Management for R and Python",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\n\nExplain why package management is complicated for both Python and R\nDefine a software environment and how it enables reproducible and portable analysis\nManage software packages reproducibly for an analysis using uv (Python)\nManage software packages reproducibly for an analysis using rv (R)\nExplain what Binder and Dockerfiles are"
+  },
+  {
+    "objectID": "index.html#keep-in-mind",
+    "href": "index.html#keep-in-mind",
+    "title": "Package Management for R and Python",
+    "section": "Keep in Mind",
+    "text": "Keep in Mind\n\nThe tools themselves are not necessarily easy to use\n\nRequire some command-line knowledge\n\nI spent about 20 hours trying to get exercises up and running on Posit Cloud\n\nHad issues with R (restoring took 20 minutes)\n\nI will mostly demo on my own machine\nAt the end is a list of software you need to install"
+  },
+  {
+    "objectID": "index.html#what-is-a-reproducible-environment",
+    "href": "index.html#what-is-a-reproducible-environment",
+    "title": "Package Management for R and Python",
+    "section": "What is a reproducible environment?",
+    "text": "What is a reproducible environment?\n\nInstall packages with annotations, run anywhere\nFixed to a particular version of Python or R\nPackages are fixed/pinned to specific version numbers"
+  },
+  {
+    "objectID": "index.html#what-reproducible-environments",
+    "href": "index.html#what-reproducible-environments",
+    "title": "Package Management for R and Python",
+    "section": "What: Reproducible Environments",
+    "text": "What: Reproducible Environments\nIn order of complexity:\n\n\n\n\n\ngraph LR\nA[Lockfile] --&gt; B\nB[Binder Ready] --&gt; C\nC[Dockerfile]\n\n\n\n\n\n\nTradeoff in terms of work on your side / ease on their side\n\nLockfile (uv/rv)\nBinder Ready\nDockerfile (The most work)"
+  },
+  {
+    "objectID": "index.html#why-use-package-managers",
+    "href": "index.html#why-use-package-managers",
+    "title": "Package Management for R and Python",
+    "section": "Why use package managers?",
+    "text": "Why use package managers?\n\nInstalling the right set of packages can be a pain to reproduce (Dependency Hell)\n\nTwo different packages will require conflcting versions of another package\n\nFuture you, different laptop\nCollaboration with others\nDissemination and sharing (see Making Code Ready for Publication)"
+  },
+  {
+    "objectID": "index.html#uvrv-state-of-the-art-package-management",
+    "href": "index.html#uvrv-state-of-the-art-package-management",
+    "title": "Package Management for R and Python",
+    "section": "uv/rv: State of the art package management",
+    "text": "uv/rv: State of the art package management\n\nBoth work on the command line\n\n\nRPython\n\n\n\nrv - package manager for R\ninstallation instructions\n\n\n\n\nuv - package manager for Python\ninstallation instructions"
+  },
+  {
+    "objectID": "index.html#what-lockfiles-and-environments",
+    "href": "index.html#what-lockfiles-and-environments",
+    "title": "Package Management for R and Python",
+    "section": "What: Lockfiles and Environments",
+    "text": "What: Lockfiles and Environments\n\nLockfiles are a recipe for recreating an environment\nWe use tools to recreate them:\n\nR: renv and rv\nPython: venv and uv\n\nEnvironments live in our folder isolated from everything else\n\nVersions of R/Python\nLibraries of packages"
+  },
+  {
+    "objectID": "index.html#what-lockfile",
+    "href": "index.html#what-lockfile",
+    "title": "Package Management for R and Python",
+    "section": "What: Lockfile",
+    "text": "What: Lockfile\nmy_project/              ## Top level\n├── rv.lock              ## R\n├── rproject.toml\n├── uv.lock              ## Python\n├── pyproject.toml\n\nList of packages and versions that you used in analysis"
+  },
+  {
+    "objectID": "index.html#lockfile-examples",
+    "href": "index.html#lockfile-examples",
+    "title": "Package Management for R and Python",
+    "section": "Lockfile Examples",
+    "text": "Lockfile Examples\n\nRPython\n\n\n{\n  \"R\": {\n    \"Version\": \"4.2.3\",\n    \"Repositories\": [\n      {\n        \"Name\": \"CRAN\",\n        \"URL\": \"https://cloud.r-project.org\"\n      }\n    ]\n  },\n  \"Packages\": {\n    \"markdown\": {\n      \"Package\": \"markdown\",\n      \"Version\": \"1.0\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"CRAN\",\n      \"Hash\": \"4584a57f565dd7987d59dda3a02cfb41\"\n    },\n    \"mime\": {\n      \"Package\": \"mime\",\n      \"Version\": \"0.7\",\n      \"Source\": \"Repository\",\n      \"Repository\": \"CRAN\",\n      \"Hash\": \"908d95ccbfd1dd274073ef07a7c93934\"\n    }\n  }\n}\n\n\nversion = 1\nrevision = 1\nrequires-python = \"&gt;=3.13.2\"\nresolution-markers = [\n    \"python_full_version &gt;= '3.14' and sys_platform == 'win32'\",\n    \"python_full_version &gt;= '3.14' and sys_platform == 'emscripten'\",\n    \"python_full_version &gt;= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'\",\n    \"python_full_version &lt; '3.14' and sys_platform == 'win32'\",\n    \"python_full_version &lt; '3.14' and sys_platform == 'emscripten'\",\n    \"python_full_version &lt; '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'\",\n]\n\n[[package]]\nname = \"branca\"\nversion = \"0.8.2\"\nsource = { registry = \"https://pypi.org/simple\" }\ndependencies = [\n    { name = \"jinja2\" },\n]\nsdist = { url = \"https://files.pythonhosted.org/packages/32/14/9d409124bda3f4ab7af3802aba07181d1fd56aa96cc4b999faea6a27a0d2/branca-0.8.2.tar.gz\", hash = \"sha256:e5040f4c286e973658c27de9225c1a5a7356dd0702a7c8d84c0f0dfbde388fe7\", size = 27890 }\nwheels = [\n    { url = \"https://files.pythonhosted.org/packages/7e/50/fc9680058e63161f2f63165b84c957a0df1415431104c408e8104a3a18ef/branca-0.8.2-py3-none-any.whl\", hash = \"sha256:2ebaef3983e3312733c1ae2b793b0a8ba3e1c4edeb7598e10328505280cf2f7c\", size = 26193 },\n]"
+  },
+  {
+    "objectID": "index.html#why-not-conda",
+    "href": "index.html#why-not-conda",
+    "title": "Package Management for R and Python",
+    "section": "Why not Conda?",
+    "text": "Why not Conda?\nAnaconda is charging institutions for using their forge - be aware that you will need to pay charges or change your forge to the Fred Hutch version.\nFor more info: https://conda-forge.fredhutch.org/"
+  },
+  {
+    "objectID": "index.html#exercise-explore-a-repository-set-up-to-be-reproducible",
+    "href": "index.html#exercise-explore-a-repository-set-up-to-be-reproducible",
+    "title": "Package Management for R and Python",
+    "section": "Exercise: Explore a repository set up to be reproducible",
+    "text": "Exercise: Explore a repository set up to be reproducible\n\nRPython\n\n\n\nR (GitHub Link\nR users: Look at both the rproject.toml and rv.lock file\n\n\n\n\nPython (GitHub Link)\nPython users: Look at both the pyproject.toml and uv.lock file\n\n\n\n\n\nWhy are there two different lockfiles? Any Guesses?"
+  },
+  {
+    "objectID": "index.html#rproject.toml-pyproject.toml",
+    "href": "index.html#rproject.toml-pyproject.toml",
+    "title": "Package Management for R and Python",
+    "section": "rproject.toml / pyproject.toml",
+    "text": "rproject.toml / pyproject.toml\n\nHuman readable and writable\nGet translated to rv.lock and uv.lock\n\n\nRPython\n\n\n[project]\nname = \"package-management-r-python\"\nr_version = \"4.4\"\n\nrepositories = [\n  {alias = \"PPM\", url = \"https://packagemanager.posit.co/cran/latest\"},\n]\n\ndependencies = [\n    \"tidyverse\",\n    \"sf\",\n]\n\n\n[project]\nname = \"package-management-r-python\"\nversion = \"0.1.0\"\ndescription = \"Add your description here\"\nreadme = \"README.md\"\nrequires-python = \"&gt;=3.11\"\ndependencies = [\n    \"pandas&gt;=3.0.0\",\n]"
+  },
+  {
+    "objectID": "index.html#rv.lock-uv.lock",
+    "href": "index.html#rv.lock-uv.lock",
+    "title": "Package Management for R and Python",
+    "section": "rv.lock / uv.lock",
+    "text": "rv.lock / uv.lock\n\nGenerated by rv and uv\nNot meant to be modified by user\nContains the dependency tree for installing your packages"
+  },
+  {
+    "objectID": "index.html#how-do-you-restore-an-environment",
+    "href": "index.html#how-do-you-restore-an-environment",
+    "title": "Package Management for R and Python",
+    "section": "How do you restore an environment?",
+    "text": "How do you restore an environment?\n\nRun uv sync and rv sync in your project folder\nRequires you to have the version of R/Python installed\n\nR: rig: https://github.com/r-lib/rig/\nPython: Can install multiple versions using the Python Installers"
+  },
+  {
+    "objectID": "index.html#two-ways",
+    "href": "index.html#two-ways",
+    "title": "Package Management for R and Python",
+    "section": "Two Ways",
+    "text": "Two Ways\n\nStart from scratch with rv/uv\nMake a requirements.txt/renv.lock file and migrate"
+  },
+  {
+    "objectID": "index.html#uv-and-rv-start-from-scratch",
+    "href": "index.html#uv-and-rv-start-from-scratch",
+    "title": "Package Management for R and Python",
+    "section": "uv and rv: start from scratch",
+    "text": "uv and rv: start from scratch\n\nBoth uv and rv expect you to start from scratch\nInitialize your folder with uv init/rv init\nAdds a .rv/.uv directory\nSee Making Code Ready for Publication if you are in the middle of an analysis project"
+  },
+  {
+    "objectID": "index.html#adding-packages-using-uv-addrv-add",
+    "href": "index.html#adding-packages-using-uv-addrv-add",
+    "title": "Package Management for R and Python",
+    "section": "Adding packages using uv add/rv add",
+    "text": "Adding packages using uv add/rv add\n\nYou need to declare the packages you want to use\n\nuv add pandas\nrv add tidyverse\n\nuv / rv will solve the dependency tree and update\nrproject.toml or pyproject.toml and the lock files"
+  },
+  {
+    "objectID": "index.html#example-making-a-lockfile",
+    "href": "index.html#example-making-a-lockfile",
+    "title": "Package Management for R and Python",
+    "section": "Example: Making a lockfile",
+    "text": "Example: Making a lockfile\n\nrv init\nrv add dplyr\n(Optional) git add . and git commit everything"
+  },
+  {
+    "objectID": "index.html#what-if-youre-already-in-the-middle-of-analysis",
+    "href": "index.html#what-if-youre-already-in-the-middle-of-analysis",
+    "title": "Package Management for R and Python",
+    "section": "What if you’re already in the middle of analysis?",
+    "text": "What if you’re already in the middle of analysis?\n\nHere’s some guidance on how to migrate your project"
+  },
+  {
+    "objectID": "index.html#making-a-lockfile-from-your-current-project",
+    "href": "index.html#making-a-lockfile-from-your-current-project",
+    "title": "Package Management for R and Python",
+    "section": "Making a Lockfile from your current project",
+    "text": "Making a Lockfile from your current project\n\nUsually done after you execute a notebook\nTakes the packages you have loaded into memory and then writes them to lockfile with versions.\n\n\nPythonR\n\n\nPut this code at the bottom of your notebook.\n# pip install session-info\n# uv add session-info\nimport session_info as si\n# put this at the end of your notebook\nsi.show(na=True, os=True, cpu=False, \n    jupyter=None, dependencies=None,  \n    write_req_file=True, \n    req_file_name=\"requirements.txt\")\n\nInstall the session-info package\n\n\n\n# install.packages(\"renv\")\nrenv::snapshot()\n\nrenv will scan your project and note package versions\nCan use the renv package to generate a current list of packages\nDoes not require a virtual environment to be initialized\nGenerates renv.lock"
+  },
+  {
+    "objectID": "index.html#what-binder-ready-repository",
+    "href": "index.html#what-binder-ready-repository",
+    "title": "Package Management for R and Python",
+    "section": "What: Binder Ready Repository",
+    "text": "What: Binder Ready Repository\nA special way to share your analysis\n\nPut your project on GitHub\nCan plug your repository link into mybinder.org\nGenerates JupyterLab / RStudio / Shiny Server instance"
+  },
+  {
+    "objectID": "index.html#what-binder.org",
+    "href": "index.html#what-binder.org",
+    "title": "Package Management for R and Python",
+    "section": "What: Binder.org",
+    "text": "What: Binder.org"
+  },
+  {
+    "objectID": "index.html#how-does-binder-work",
+    "href": "index.html#how-does-binder-work",
+    "title": "Package Management for R and Python",
+    "section": "How does Binder work?",
+    "text": "How does Binder work?\n\nLaunches your analysis in a container (Dockerizes your analysis)\nUses requirements.txt (Python), environment.yml (Conda) or install.R (R) or Dockerfiles in your repository\nInstalls relevant packages and dependencies into a docker image"
+  },
+  {
+    "objectID": "index.html#install.r-using-renv-put-in-your-top-directory",
+    "href": "index.html#install.r-using-renv-put-in-your-top-directory",
+    "title": "Package Management for R and Python",
+    "section": "install.R using renv (put in your top directory)",
+    "text": "install.R using renv (put in your top directory)\ninstall.packages(\"renv\")\nrenv::restore()"
+  },
+  {
+    "objectID": "index.html#dockerfile",
+    "href": "index.html#dockerfile",
+    "title": "Package Management for R and Python",
+    "section": "Dockerfile",
+    "text": "Dockerfile\n\nA precise list of instructions to install your computational environment\nMore useful if you are distributing software.\nMore portable across systems other than Binder\nTakes a lot of work, builds on the work of others"
+  },
+  {
+    "objectID": "index.html#dockerfile-tips",
+    "href": "index.html#dockerfile-tips",
+    "title": "Package Management for R and Python",
+    "section": "Dockerfile Tips",
+    "text": "Dockerfile Tips\n\nDon’t try to create Dockerfiles from scratch!\n\nWILDS Docker Library - Dockerfiles for a number of genomics/bioinformatics packages\nResearch Computing Data House Calls!\nOther Sources: BioC, Rocker Project, WILDS Docker Library\nUse https://repo2docker.readthedocs.io/en/latest/\n\nhttps://repo2docker.readthedocs.io/en/latest/configuration/#config-files"
+  },
+  {
+    "objectID": "index.html#dockerfile-example",
+    "href": "index.html#dockerfile-example",
+    "title": "Package Management for R and Python",
+    "section": "Dockerfile example",
+    "text": "Dockerfile example\nFROM rocker/geospatial:4.5.0\n\nLABEL org.opencontainers.image.licenses=\"GPL-2.0-or-later\" \\\n      org.opencontainers.image.source=\"https://github.com/achubaty/rocker-files\" \\\n      org.opencontainers.image.vendor=\"FOR-CAST Research & Analytics\" \\\n      org.opencontainers.image.authors=\"achubaty@for-cast.ca\"\n\nCOPY scripts/* /rocker-files_scripts/\n\nRUN /rocker-files_scripts/install_additional_libs.sh\nRUN /rocker-files_scripts/install_geospatial_extras.sh\nRUN /rocker-files_scripts/install_geospatial_R.sh\nhttps://github.com/achubaty/rocker-files/blob/main/dockerfiles/r-spatial-base_4.5.Dockerfile"
+  },
+  {
+    "objectID": "index.html#wilds-wdl-library-example",
+    "href": "index.html#wilds-wdl-library-example",
+    "title": "Package Management for R and Python",
+    "section": "WILDS WDL Library Example",
+    "text": "WILDS WDL Library Example\nhttps://github.com/getwilds/wilds-docker-library/blob/main/bcftools/Dockerfile_latest"
+  },
+  {
+    "objectID": "index.html#using-containers-on-hpc",
+    "href": "index.html#using-containers-on-hpc",
+    "title": "Package Management for R and Python",
+    "section": "Using Containers on HPC",
+    "text": "Using Containers on HPC\n\nUse Apptainer to run Docker Containers: https://bashforbio.netlify.app/04_containers_workflows.html#using-a-container\nUnderstand how to bind/mount file paths to the container: https://bashforbio.netlify.app/testing.html#sec-bindpaths"
+  },
+  {
+    "objectID": "index.html#tl-dr-1",
+    "href": "index.html#tl-dr-1",
+    "title": "Package Management for R and Python",
+    "section": "TL; DR",
+    "text": "TL; DR\n\nSoftware environments are a spectrum\nPackage Managers make your work reproducible\nuv/rv require you to be proactive (start from scratch)\nIf you’re in the middle of an analysis, look at renv::snapshot()/requirements.txt as good starting points\nBinder lets you make a pre configured docker container with JupyterLab/RStudio\nDockerfiles are the gold standard, but seek help making them"
+  },
+  {
+    "objectID": "index.html#what-you-need-to-reproduce-the-examples",
+    "href": "index.html#what-you-need-to-reproduce-the-examples",
+    "title": "Package Management for R and Python",
+    "section": "What you need to reproduce the examples",
+    "text": "What you need to reproduce the examples\nFor R:\n\nInstall rv\nInstall rig to manage different versions of R\n\nMac installer: https://github.com/r-lib/rig/releases/download/v0.7.1/rig-0.7.1-macOS-x86_64.pkg\nPC installer: https://github.com/r-lib/rig/releases/download/v0.7.1/rig-windows-0.7.1.exe\n\n\n\nrig add 4.5.2 to add R 4.5.2 on your system\n\n\nInstall Positron\nClone or download http://github.com/fhdsl/mcr_example_r\nOpen the folder in Positron (File &gt;&gt; Open Folder)"
+  },
+  {
+    "objectID": "index.html#for-python",
+    "href": "index.html#for-python",
+    "title": "Package Management for R and Python",
+    "section": "For Python",
+    "text": "For Python\n\nInstall Python 3.13\nInstall uv\n\nMac Instructions (I use homebrew)\nPC Instructions\n\nInstall Positron\nClone or download http://github.com/fhdsl/mcr_example_python\nOpen the folder in Positron (File &gt;&gt; Open Folder)"
+  }
+]
